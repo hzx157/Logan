@@ -119,8 +119,7 @@ extern NSString *_Nonnull loganTodaysDate(void);
 
 
 /**
- 返回今天日期
- 
- @return @"2018-11-21"
+ 设置log路径
+ @param logPath 路径
  */
 extern void loganLogDirectory(NSString * _Nonnull logPath);
