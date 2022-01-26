@@ -36,7 +36,7 @@ NSData *__AES_KEY;
 NSData *__AES_IV;
 uint64_t __max_file;
 uint32_t __max_reversed_date;
-
+NSString *ldLogPath;
 
 @interface Logan : NSObject {
     NSTimeInterval _lastCheckFreeSpace;
@@ -110,6 +110,10 @@ void loganFlush(void) {
 
 NSString *_Nonnull loganTodaysDate(void) {
     return [Logan currentDate];
+}
+
+void loganLogDirectory(NSString * _Nonnull logPath){
+    ldLogPath = logPath;
 }
 
 
@@ -280,6 +284,7 @@ NSString *_Nonnull loganTodaysDate(void) {
     int second = secOfDay % 60;
     int millis = time.tv_usec / 1000;
     NSString *str = [[NSString alloc] initWithFormat:@"%02d:%02d:%02d.%03d [%lu] %@\n", hour, minute, second, millis, (unsigned long)type, log];
+    str = [NSString stringWithFormat:@"%@\n",log];
     const char *buf = [str cStringUsingEncoding:NSUTF8StringEncoding];
     printf("%s", buf);
 }
@@ -525,6 +530,10 @@ NSString *_Nonnull loganTodaysDate(void) {
 }
 
 + (NSString *)loganLogDirectory {
+
+    if (ldLogPath.length > 0 ){
+        return ldLogPath;
+    }
     static NSString *dir = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

@@ -50,7 +50,7 @@ typedef enum : NSUInteger {
     loganInit(keydata, ivdata, file_max);
     // 将日志输出至控制台
     loganUseASL(YES);
-
+    loganLogDirectory([[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"LoganLoggerv"]);
     self.view.backgroundColor = [UIColor whiteColor];
 }
 - (IBAction)lllog:(id)sender {
