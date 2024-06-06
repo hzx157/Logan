@@ -21,8 +21,14 @@
  */
 
 #import <Foundation/Foundation.h>
+#ifdef __cplusplus
+#define WJLogan_EXPORT extern "C" __attribute__((visibility("default")))
+#else
+#define WJLogan_EXPORT extern __attribute__((visibility("default")))
+#endif
 
-extern void loganUseASL(BOOL b);
+//extern
+WJLogan_EXPORT void loganUseASL(BOOL b);
 
 typedef void (^LoganUploadResultBlock)(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error);
 
@@ -40,14 +46,14 @@ typedef void (^LoganFilePathBlock)(NSString *_Nullable filePath);
  @param aes_iv16  16位aes加密iv
  @param max_file  日志文件最大大小，超过该大小后日志将不再被写入，单位：byte。
  */
-extern void loganInit(NSData *_Nonnull aes_key16, NSData *_Nonnull aes_iv16, uint64_t max_file);
+WJLogan_EXPORT void loganInit(NSData *_Nonnull aes_key16, NSData *_Nonnull aes_iv16, uint64_t max_file);
 
 /**
  设置本地保存最大文件天数
 
  @param max_reversed_date 超过该文件天数的文件会被Logan删除，默认7天
  */
-extern void loganSetMaxReversedDate(int max_reversed_date);
+WJLogan_EXPORT void loganSetMaxReversedDate(int max_reversed_date);
 /**
  记录Logan日志
  
@@ -58,38 +64,38 @@ extern void loganSetMaxReversedDate(int max_reversed_date);
  用例：
  logan(1, @"this is a test");
  */
-extern void logan(NSUInteger type, NSString *_Nonnull log);
+WJLogan_EXPORT void logan(NSUInteger type, NSString *_Nonnull log);
 
 /**
  将日志全部输出到控制台的开关，默认NO
  
  @param b 开关
  */
-extern void loganUseASL(BOOL b);
+WJLogan_EXPORT void loganUseASL(BOOL b);
 
 /**
  立即写入日志文件
  */
-extern void loganFlush(void);
+WJLogan_EXPORT void loganFlush(void);
 
 /**
  日志信息输出开关，默认NO
  
  @param b 开关
  */
-extern void loganPrintClibLog(BOOL b);
+WJLogan_EXPORT void loganPrintClibLog(BOOL b);
 
 /**
  清除本地所有日志
  */
-extern void loganClearAllLogs(void);
+WJLogan_EXPORT void loganClearAllLogs(void);
 
 /**
  返回本地所有文件名及大小(单位byte)
  
  @return @{@"2018-11-21":@"110"}
  */
-extern NSDictionary *_Nullable loganAllFilesInfo(void);
+WJLogan_EXPORT NSDictionary *_Nullable loganAllFilesInfo(void);
 
 /**
  根据日期获取上传日志的文件路径，异步方式！
@@ -97,7 +103,7 @@ extern NSDictionary *_Nullable loganAllFilesInfo(void);
  @param date 日志日期 格式："2018-11-21"
  @param filePathBlock 回调返回文件路径，在主线程中回调
  */
-extern void loganUploadFilePath(NSString *_Nonnull date, LoganFilePathBlock _Nonnull filePathBlock);
+WJLogan_EXPORT void loganUploadFilePath(NSString *_Nonnull date, LoganFilePathBlock _Nonnull filePathBlock);
 
 /**
  上传指定日期的日志
@@ -108,18 +114,18 @@ extern void loganUploadFilePath(NSString *_Nonnull date, LoganFilePathBlock _Non
  @param unionId 当前用户的唯一标识,用来区分日志来源用户
  @param resultBlock 服务器返回结果
  */
-extern void loganUpload(NSString * _Nonnull url, NSString * _Nonnull date,NSString * _Nullable appId, NSString *_Nullable unionId,NSString *_Nullable deviceId, LoganUploadResultBlock _Nullable resultBlock);
+WJLogan_EXPORT void loganUpload(NSString * _Nonnull url, NSString * _Nonnull date,NSString * _Nullable appId, NSString *_Nullable unionId,NSString *_Nullable deviceId, LoganUploadResultBlock _Nullable resultBlock);
 
 /**
  返回今天日期
  
  @return @"2018-11-21"
  */
-extern NSString *_Nonnull loganTodaysDate(void);
+WJLogan_EXPORT NSString *_Nonnull loganTodaysDate(void);
 
 
 /**
  设置log路径
  @param logPath 路径
  */
-extern void loganLogDirectory(NSString * _Nonnull logPath);
+WJLogan_EXPORT void loganLogDirectory(NSString * _Nonnull logPath);
