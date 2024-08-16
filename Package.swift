@@ -29,6 +29,13 @@ let package = Package(
     products: [
         .library(name: "Logan", targets: ["Logan"]),
     ],
+     platforms: [
+        .iOS(.v12),
+        .macOS(.v10_15),
+        .tvOS(.v12),
+        .watchOS(.v8),
+        .custom("xros", versionString: "1.0")
+    ],
     targets: [
         .target(
             name: "mbedtls",
